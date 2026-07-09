@@ -59,6 +59,7 @@ export function createDefaultNode(nodeType: NodeType): BuilderNode {
       break;
     case 'result':
       node.reads = ['output'];
+      node.writes = ['result'];
       break;
     case 'llm_call':
       node.reads = ['prompt'];
@@ -77,15 +78,16 @@ export function createDefaultNode(nodeType: NodeType): BuilderNode {
       break;
     case 'loop':
       node.reads = ['items'];
-      node.writes = ['current_item', 'loop_index'];
+      node.writes = ['current_item', 'loop_index', 'items_index'];
       node.loopVariable = 'items';
       node.itemVariable = 'current_item';
       node.branches = [];
       break;
     case 'router':
       node.reads = ['status'];
+      node.writes = ['route'];
       node.branches = [
-        { name: 'Branch 1', condition: 'default', firstAction: undefined },
+        { name: 'Branch 1', condition: 'branch_1', firstAction: undefined },
         { name: 'Branch 2', condition: 'default', firstAction: undefined }
       ];
       break;
